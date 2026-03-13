@@ -141,7 +141,7 @@ The application reads database configuration from environment variables.
 
 Instead of relying on the current working directory, the program explicitly loads the environment file from the standard OS config directory. This makes the configuration more reliable across platforms.
 
-Create a file named .env.sysman in your OS config directory:
+Create a file named .env in your OS config directory:
 - Linux: ~/.config/the_app/.env
 - macOS: ~/Library/Application Support/the_app/.env
 - Windows: C:\Users\<User>\AppData\Roaming\the_app/.env
@@ -171,7 +171,7 @@ use dirs;
 let mut path = dirs::config_dir()
     .ok_or("Cannot find configuration directory")?;
 
-// Append the path to the sysman env file
+// Append the path to the env file
 path.push("the_app/.env");
 
 // Load environment variables from the file
