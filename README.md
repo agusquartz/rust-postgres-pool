@@ -13,7 +13,7 @@ This project is intentionally small and heavily documented so it can be used as 
 
 ---
 
-# Features
+## Features
 
 - Global connection pool using `OnceCell`
 - Asynchronous PostgreSQL access with `tokio`
@@ -26,7 +26,7 @@ The implementation avoids unnecessary complexity while still following good prod
 
 ---
 
-# Architecture
+## Architecture
 
 The project contains two main files:
 
@@ -64,7 +64,7 @@ Demonstrates how to:
 
 ---
 
-# How the Connection Pool Works
+## How the Connection Pool Works
 
 Instead of using a single database connection protected by a mutex, this project uses a **connection pool**.
 
@@ -91,7 +91,7 @@ This allows **concurrent database operations without locking**.
 
 ---
 
-# Connection Validation
+## Connection Validation
 
 The pool uses:
 
@@ -111,7 +111,7 @@ This prevents the application from receiving **stale or broken connections**.
 
 ---
 
-# TCP Keepalive
+## TCP Keepalive
 
 TCP keepalive is enabled to help detect broken network connections.
 
@@ -126,7 +126,7 @@ When a connection becomes invalid, the pool recreates it automatically.
 
 ---
 
-# Running the Example
+## Running the Example
 
 ### 1. Clone the repository
 
@@ -141,10 +141,15 @@ The application reads database configuration from environment variables.
 
 Instead of relying on the current working directory, the program explicitly loads the environment file from the standard OS config directory. This makes the configuration more reliable across platforms.
 
-Create a file named .env in your OS config directory:
-- Linux: ~/.config/the_app/.env
-- macOS: ~/Library/Application Support/the_app/.env
-- Windows: C:\Users\<User>\AppData\Roaming\the_app/.env
+Create a file named `.env` inside the `rust-postgres-pool` directory in your OS config folder:
+- Linux: ~/.config/rust-postgres-pool/.env
+- macOS: ~/Library/Application Support/rust-postgres-pool/.env
+- Windows: C:\Users\<User>\AppData\Roaming\rust-postgres-pool\.env
+
+The configuration file is stored inside a directory named after the application
+(`rust-postgres-pool`) within the OS configuration directory.
+This avoids conflicts with other applications and follows standard platform
+conventions.
 
 Example .env:
 
@@ -164,7 +169,6 @@ Example configuration in main.rs:
 ```rust
 use dotenvy::from_filename;
 use std::env;
-use std::path::PathBuf;
 use dirs;
 
 // Determine the OS-specific config directory
@@ -172,7 +176,7 @@ let mut path = dirs::config_dir()
     .ok_or("Cannot find configuration directory")?;
 
 // Append the path to the env file
-path.push("the_app/.env");
+path.push("rust-postgres-pool/.env");
 
 // Load environment variables from the file
 from_filename(&path)?;
@@ -198,7 +202,7 @@ cargo run
 
 ---
 
-# Dependencies
+## Dependencies
 
 ```
 tokio
@@ -212,7 +216,7 @@ dirs
 
 ---
 
-# When to Use Transactions
+## When to Use Transactions
 
 Transactions are useful when:
 
@@ -225,7 +229,7 @@ For simple read queries, explicit transactions are usually unnecessary because P
 
 ---
 
-# Purpose of This Repository
+## Purpose of This Repository
 
 This project is meant to serve as:
 
@@ -237,6 +241,6 @@ It focuses on clarity, documentation, and correctness rather than advanced abstr
 
 ---
 
-# License
+## License
 
 MIT
